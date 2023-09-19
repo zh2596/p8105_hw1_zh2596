@@ -33,7 +33,7 @@ ggplot(early_january_weather, aes(x = time_hour, y = temp, color= humid)) + geom
 
 It seems like the temperature fluctuates with an tendency of increase (approximately from 25F to 50F) as time passes, and the humidity level increases as well. The scatterplot behaves like a line chart in a discrete form.
 
-This scatterplot is exported to the directory, named as "p8105_hw1_scatterplot":
+This scatterplot is exported to the directory as a pdf document, named as "p8105_hw1_scatterplot":
 
 ```{r 3, message=FALSE}
 ggsave("p8105_hw1_scatterplot.pdf")
@@ -46,7 +46,7 @@ Create a data frame named "p8105_hw1_df":
 ```{r 4}
 p8105_hw1_df <- tibble(rand_vec = rnorm(10),
                        logical_vec = rand_vec > 0,
-                       char_vec = c("1","2","3","4","5","6","7","8","9","10"),
+                       char_vec = c("1mean(pull(p8105_hw1_df, var=2))","2","3","4","5","6","7","8","9","10"),
                        fac_vec = factor(c(1,1,1,2,2,2,2,3,3,3)))
 ```
 
@@ -57,9 +57,9 @@ Using the `pull` function to try take the mean of each variable in the dataframe
 mean(pull(p8105_hw1_df, var=1))
 # Mean of the logical vector:
 mean(pull(p8105_hw1_df, var=2))
-# Mean of the character vector does not exist:
+# This generates an error:
 # mean(pull(p8105_hw1_df, var=3))
-# Mean of the factor vector does not exist:
+# This generates an error:
 # mean(pull(p8105_hw1_df, var=4))
 ```
 
@@ -71,8 +71,8 @@ as.numeric(pull(p8105_hw1_df, var=3))
 as.numeric(pull(p8105_hw1_df, var=4))
 ```
 
-For the logical vector, since by default, `TRUE` is 1 and `FALSE` is 0, I can take the mean of this vector without the necessity of transforming it to numeric values. 
+For the logical vector, since by default, `TRUE` is 1 and `FALSE` is 0, I can take the mean of this vector directly, without the necessity of transforming it to numeric values. 
 
-I can successfully take the mean of the character vector, which is `r mean(as.numeric(pull(p8105_hw1_df, var=3)))`. This is because inside the character values, even containing numbers, cannot be used for numerical calculations. 
+After the numeric transformation, I can take the mean of the character vector, which is `r mean(as.numeric(pull(p8105_hw1_df, var=3)))`. This is because inside the character values themselves are not considered as numeric values for computation, even if they contain numbers (like "1", "2", etc.)
 
-Also, I can successfully take the mean of the factor vector, which is `r mean(as.numeric(pull(p8105_hw1_df, var=4)))`. This is because inside the original factor vector, the factor level itself is not specified as numeric values in order to conduct calculations.  
+Also, I can take the mean of the factor vector, which is `r mean(as.numeric(pull(p8105_hw1_df, var=4)))`. This is because inside the original factor vector, the factor level itself cannot be specified as numeric values in order to conduct calculations.  
